@@ -1,0 +1,43 @@
+# Copy to config.toml and edit. Section names are only for grouping; keys are flat.
+# Never put credentials, cookies or tokens here: you log in yourself in the browser.
+
+url = "https://app.example.com/dashboard"
+output_dir = "captures"
+headless = false                  # keep false: you must be able to log in
+# profile_dir = "profiles/example" # opt-in: remember the login between runs (holds session cookies!)
+
+[browser]
+viewport_width = 1366
+viewport_height = 900
+full_page_screenshot = true
+
+[auth]
+# Shell-style globs matched against scheme://host/path (query string ignored).
+login_url_patterns = ["*/login*", "*/signin*", "*/sign-in*", "*/sign_in*", "*/oauth/*", "*/sso/*"]
+authenticated_url_patterns = []    # e.g. ["*/dashboard*"]
+authenticated_selectors = []       # e.g. ["[data-testid=avatar]", "a[href*=logout]"]
+require_manual_confirm = false     # true = always click "I'm signed in" yourself
+reload_on_start = true             # reload current page after Start Scraping to record its load traffic
+
+[scope]
+allowed_hosts = []                 # empty = host of url (+ subdomains). Bodies/assets saved only for these.
+save_resource_types = ["document", "stylesheet", "script", "image", "font", "media", "manifest"]
+save_api_bodies = true
+api_body_content_types = ["json", "text/", "xml", "graphql", "javascript"]
+
+[limits]
+max_body_bytes = 5000000
+max_total_bytes = 500000000
+max_requests = 20000
+max_pages = 200
+max_duration_s = 3600
+
+[crawl]
+crawl_enabled = false              # GET-only link crawler within allowed_hosts
+crawl_max_depth = 1
+crawl_max_pages = 20
+crawl_exclude_patterns = ["logout", "log-out", "signout", "sign-out", "delete", "remove", "destroy", "unsubscribe"]
+
+[redaction]
+redact_headers = []                # extra header names to redact
+redact_keys = []                   # extra query/JSON/form keys to redact

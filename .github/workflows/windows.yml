@@ -1,0 +1,21 @@
+# Proves the zero-install Windows path: a clean runner with no uv, bootstrapped only by run.cmd.
+name: windows
+on: [push, workflow_dispatch]
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap via run.cmd (installs uv, Python, deps, Chromium into the folder)
+        shell: cmd
+        run: run.cmd --help
+      - name: Tests (headless; needs the headless shell too)
+        shell: cmd
+        env:
+          UV_PYTHON_INSTALL_DIR: ${{ github.workspace }}\.uv\python
+          UV_CACHE_DIR: ${{ github.workspace }}\.uv\cache
+          UV_PYTHON_PREFERENCE: only-managed
+          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}\.browsers
+        run: |
+          .uv\uv.exe run --frozen playwright install chromium
+          .uv\uv.exe run --frozen pytest -q

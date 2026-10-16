@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+captures/
+profiles/
+.pytest_cache/
+.uv/
+.browsers/
+dist/

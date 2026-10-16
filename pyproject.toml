@@ -1,0 +1,27 @@
+[project]
+name = "web-cloner"
+version = "0.1.0"
+description = "Inspect a website you are authorized to analyze and capture its frontend + observed traffic, after manual login."
+readme = "README.md"
+authors = [
+    { name = "nakul-krishnakumar", email = "nakulkrishnakumar86@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "playwright>=1.64,<2",
+]
+
+[project.scripts]
+web-cloner = "web_cloner.app:main"
+
+[build-system]
+requires = ["uv_build>=0.10.6,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
